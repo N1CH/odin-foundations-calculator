@@ -81,12 +81,20 @@ function solve(str) {
     }
     const left = str.substr(0, pos);
     const right = str.substr(pos + 1);
+    console.log(left + " " + right);
     switch (op) {
         case "%": return left % right;
-        case "÷": return Math.round(left / right * 100) / 100;
+        case "÷": 
+        if(right == 0) {
+            console.log("ko");
+            return "Can't divide by 0!"
+        } else {
+            console.log("ok");
+            return Math.round(left / right * 100) / 100;
+        };
         case "*": return left * right;
         case "-": return left - right;
-        case "+": return parseInt(left) + parseInt(right); 
+        case "+": return parseFloat(left) + parseFloat(right); 
     }
 }
 
@@ -122,14 +130,13 @@ clear.addEventListener("click", () => {
 
 operators.forEach(operator => {
     operator.addEventListener("click", () => {
-        console.log(lastCharacter + " is the last");
-        if(hasOperation(input.textContent) && !isOperator(lastCharacter)) {
+        if(hasOperation(input.textContent) && !isOperator(lastCharacter) && input.textContent != "" && last != "Can't divide by 0!" && last != "NaN") {
             last = solve(input.textContent);
             updateDisplay(result, last);
             updateDisplay(input, last + " " + operator.textContent + " ");
         } else if(isOperator(lastCharacter)) {
             updateDisplay(input, input.textContent.slice(0, -3) + " " + operator.textContent + " ");
-        } else {
+        } else if(input.textContent != "" && !hasOperation(input.textContent)) {
             updateDisplay(input, input.textContent + " " + operator.textContent + " ");
         }
     })
@@ -145,11 +152,17 @@ equal.addEventListener("click", () => {
 });
 
 answer.addEventListener("click", () => {
-    updateDisplay(input, input.textContent + last);
+    if(last != "Can't divide by 0!") {
+        updateDisplay(input, input.textContent + last);
+    }
 });
 
+function countOccurences(string, word) {
+    return string.split(word).length - 1;
+}
+
 point.addEventListener("click", () => {
-    if(!isOperator(lastCharacter) && !input.textContent.includes(".") && input.textContent !== "") {
+    if(!isOperator(lastCharacter) && countOccurences(input.textContent, ".") <= 1 && input.textContent != "" && lastCharacter != ".") {
         updateDisplay(input, input.textContent + ".");
     }
 });
