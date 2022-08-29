@@ -5,6 +5,16 @@ body {
     min-height: 95vh;
 }
 
+.noselect {
+    -webkit-touch-callout: none; /* iOS Safari */
+      -webkit-user-select: none; /* Safari */
+       -khtml-user-select: none; /* Konqueror HTML */
+         -moz-user-select: none; /* Old versions of Firefox */
+          -ms-user-select: none; /* Internet Explorer/Edge */
+              user-select: none; /* Non-prefixed version, currently
+                                    supported by Chrome, Edge, Opera and Firefox */
+  }
+
 .calculator {
     margin-top: 80px;
     background-color: rgb(34, 34, 34);
@@ -49,12 +59,13 @@ body {
     align-content: space-between;
 }
 
-.upper-screen {
+.user-input {
     font-size: 35px;
     padding: 10px;
+    overflow: hidden;
 }
 
-.lower-screen {
+.result {
     justify-items: end;
     align-self: end;
     font-size: 35px;
@@ -90,6 +101,7 @@ body {
 }
 
 footer {
+    display: block;
     font-size: 20px;
     font-weight: 500;
     margin-top: auto;
